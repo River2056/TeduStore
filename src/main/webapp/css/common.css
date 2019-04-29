@@ -1,0 +1,140 @@
+@CHARSET "UTF-8";
+
+.button-block {
+	margin: 30px 0 0 0;
+}
+
+.button-blue {
+	font-size: 14px;
+	float: left;
+	display: block;
+	padding: 0 16px;
+	height: 42px;
+	line-height: 42px;
+	text-align: center;
+	background: #27b1f6;
+	color: #fff;
+	border-radius: 2px;
+	text-decoration: none;
+}
+
+.button-blue:hover {
+	background: #37c1d6;
+}
+
+.dismiss_popup {
+	display: block;
+	background: #27b1f6;
+	color: #fff;
+	padding: 5px 10px;
+	text-decoration: none;
+	border-radius: 5px;
+	position: absolute;
+	left: 2%;
+	top: 3%;
+	z-index: 10000;
+	margin: 0 0 20px 0;
+}
+
+#mask {
+	background: rgb(0, 0, 0, .2);
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	z-index: 1010;
+}
+
+#popup_content {
+	background: #fff;
+	position: absolute;
+	display: none;
+	border-radius: 5px;
+	left: 0;
+	top: 0;
+	z-index: 10000;
+}
+
+#popup_content h3 {
+	font-size: 16px;
+	margin: 0;
+	padding: 10px 10px;
+	border-bottom: 2px solid #ccc;
+}
+
+.address_list {
+	color: #121212;
+	font-size: 14px;
+}
+
+.address_list .header {
+	padding: 0 0 10px 0;
+    margin: 0 0 20px 0;
+    border-bottom: 2px solid #e8e8e8;
+    height: 20px;
+}
+
+.address_list .content {
+	height: 36px;
+	margin: 0 0 10px 0;
+	border: 1px solid #eee;
+	background: #e8e8e8;
+}
+
+.address_list .content_active {
+	border: 1px solid #2ea8ee;
+}
+
+.address_list .tag, 
+.address_list .name, 
+.address_list .addr,
+.address_list .phone, 
+.address_list .operation, 
+.address_list .set_default {
+	float: left;
+    text-align: center;
+    height: 36px;
+    line-height: 36px;
+    overflow: hidden;
+}
+
+.address_list .tag {
+	width: 100px;
+	color: #fff;
+}
+
+.address_list .tag_active {
+	background: #2ea8ee;
+}
+
+.address_list .tag_normal {
+	background: #999;
+}
+
+.address_list .name {
+	width: 75px;
+}
+
+.address_list .addr {
+	width: 340px;
+}
+
+.address_list .phone {
+	width: 100px
+}
+
+.address_list .operation {
+	width: 100px;
+}
+
+.address_list .operation span {
+	padding: 0 3px;
+}
+
+.address_list .set_default {
+	width: 100px;
+}
+
+.address_list .header .tag {
+	color: #121212;
+}
