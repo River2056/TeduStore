@@ -95,66 +95,46 @@
             <div class="cat_header color_2">
                 <span>
                     <img src="../images/itemCat/computer_icon1.png" alt=""/>
-                    電腦,辦公/1F
+                    	電腦,辦公/1F
                 </span>
             </div>
             <div class="item_cat_all">
-                <p>電腦整機</p>
-                <ul>
-                    <li><a href="#">筆記本</a></li>
-                    <li><a href="#">遊戲機</a></li>
-                    <li><a href="#">台式機</a></li>
-                    <li><a href="#">一體機</a></li>
-                    <li><a href="#">服務器</a></li>
-                    <li><a href="#">聯想</a></li>
-                </ul>
-                <p>電腦配件</p>
-                <ul>
-                    <li><a href="#">CPU</a></li>
-                    <li><a href="#">SSD硬盤</a></li>
-                    <li><a href="#">顯示器</a></li>
-                    <li><a href="#">顯卡</a></li>
-                    <li><a href="#">组装電腦</a></li>
-                    <li><a href="#">機箱</a></li>
-                </ul>
-                <p>外設/遊戲</p>
-                <ul>
-                    <li><a href="#">键盤</a></li>
-                    <li><a href="#">滑鼠</a></li>
-                    <li><a href="#">U盤</a></li>
-                    <li><a href="#">移動硬盤</a></li>
-                    <li><a href="#">遊戲設備</a></li>
-                    <li><a href="#">智能單車</a></li>
-                </ul>
+            	<!-- 顯示電腦的分類訊息 -->
+         		<p>${categories161[0].name }</p>
+         		<ul>
+         			<c:forEach items="${ computerCategories[0] }" var="category">
+         				<li><a href="#${category.id }">${category.name }</a></li>
+         			</c:forEach>
+         		</ul>
+         		
+         		
+         		<p>${categories161[1].name }</p>
+         		<ul>
+         			<c:forEach items="${ computerCategories[1] }" var="category">
+         				<li><a href="#${category.id }">${category.name }</a></li>
+         			</c:forEach>
+         		</ul>
+         		
+         		<p>${categories161[2].name }</p>
+         		<ul>
+	          		<c:forEach items="${ computerCategories[2] }" var="category">
+	          			<li><a href="#${category.id }">${category.name }</a></li>
+	          		</c:forEach>
+	          	</ul>
+            	
             </div>
         </div>
-        <div class="item_msg lf">
-            <img src="../images/itemCat/study_computer_img3.png" alt=""/>
-
-            <p class="bottom_ys2">戴爾(DELL)XPS13-9360-R1609 13.3英吋微邊框筆記本電腦</p>
-
-            <p class="bottom_ys3">￥4600.00</p>
-
-            <p class="bottom_ys4 color_2"><a href="product_details.html">查看詳情</a></p>
-        </div>
-        <div class="item_msg lf">
-            <img src="../images/itemCat/study_computer_img4.png" alt=""/>
-
-            <p class="bottom_ys2">14.8mm超輕薄筆記本電腦  航海王版 13.3英吋微邊框筆記本電腦</p>
-
-            <p class="bottom_ys3">￥5600.00</p>
-
-            <p class="bottom_ys4 color_2"><a href="product_details.html">查看詳情</a></p>
-        </div>
-        <div class="item_msg lf">
-            <img src="../images/itemCat/study_computer_img5.png" alt=""/>
-
-            <p class="bottom_ys2">聯想(Lenovo) YOGA900 多彩版 13.3英吋微邊框筆記本電腦</p>
-
-            <p class="bottom_ys3">￥6600.00</p>
-
-            <p class="bottom_ys4 color_2"><a href="product_details.html">查看詳情</a></p>
-        </div>
+        <c:forEach items="${computers }" var="computer">
+        	<div class="item_msg lf">
+	            <img width="190px" height="130px" src="${pageContext.request.contextPath }${computer.image }" alt=""/>
+	
+	            <p class="bottom_ys2">${computer.title }</p>
+	
+	            <p class="bottom_ys3">￥${computer.price }.00</p>
+	
+	            <p class="bottom_ys4 color_2"><a href="#${computer.id }">查看詳情</a></p>
+        	</div>
+        </c:forEach>
     </div>
 </div>
 <!--楼梯2f-->

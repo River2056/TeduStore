@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.tedu.store.mapper.GoodsMapper">
+	
+	<!-- 根據商品分類ID獲取商品清單 -->
+	<!-- List<Goods> getGoodsListByCategoryId(
+			@Param("categoryId") Integer categoryId, 
+			@Param("orderBy") String orderBy, 
+			@Param("offset") Integer offset, 
+			@Param("count") Integer count) -->
+	<select id="getGoodsListByCategoryId" resultType="cn.tedu.store.bean.Goods">
+		SELECT 
+			id, 
+			category_id 	AS categoryId, 
+			item_type 		AS itemType, 
+			title, 
+			sell_point 		AS sellPoint, 
+			price, 
+			num, 
+			barcode			AS barCode, 
+			image, 
+			status, 
+			priority, 
+			created_time 	AS createdTime, 
+			modified_time 	AS modifiedTime, 
+			created_user 	AS createdUser, 
+			modified_user 	AS modifiedUser
+		FROM 
+			t_goods 
+		WHERE 
+			category_id = #{categoryId} AND status = 1 AND num > 0 
+		ORDER BY 
+			${orderBy}  
+		LIMIT 
+			#{offset}, #{count}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
