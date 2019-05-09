@@ -31,9 +31,9 @@
 
 #cover{
     width: 280px;
-    height: 296px;
+/*     height: 296px; */
     margin-right: 122px;
-    margin-top: 122px;
+    margin-top: 100px;
     box-sizing: border-box;
     background-color: rgba(0,0,0,0.3);
 }
@@ -41,7 +41,7 @@
     float: left;
     overflow: hidden;
     width: 253px;
-    height: 277px;
+/*     height: 277px; */
     padding: 10px;
 }
 #form-register .txt{
@@ -212,8 +212,8 @@ input[type="button"] {
     /* margin-top: 250px; */
     /* margin-bottom: -51px; */
     position: absolute;
-    top: 330px;
-    right: 135px;
+    top: 302px;
+    right: 132px;
     display: inline-block;
     line-height: 30px;
     /*background: red;*/

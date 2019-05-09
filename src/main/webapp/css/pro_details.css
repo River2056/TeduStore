@@ -26,7 +26,7 @@
  }
  #shop_detail {
      width: 1011px;
-     height: 465px;
+/*      height: 465px; */
      /*border: 1px solid red;*/
      margin-bottom: 38px;
      margin-top:10px;
@@ -62,7 +62,7 @@
 /*右侧详情*/
  .right_detail{
      width: 500px;
-     height: 300px;
+/*      height: 300px; */
      float:right;
  }
  .right_detail h1{
@@ -152,19 +152,22 @@
  }
  .right_detail>P>.avenge {
      display: inline-block;
-     width: 86px;
-     height: 36px;
-     text-align: center;
-     font-size: 16px;
-     border: 1px solid #666666;
-     margin-right: 3px;
-     padding: 10px 0px;
-     text-align: center;
-     vertical-align: middle;
-     box-sizing: border-box;
-     cursor: pointer;
+/*      width: 86px; */
+/*      height: 36px; */
+/*      text-align: center; */
+/*      font-size: 16px; */
+/*      border: 1px solid #666666; */
+/*      margin: 0 3px 3px 0; */
+/*      padding: 10px 6px; */
+/*      text-align: center; */
+/*      vertical-align: middle; */
+/*      box-sizing: border-box; */
+/*      cursor: pointer; */
  }
- .right_detail>P>.number,.right_detail>P>.numberMinus,.right_detail>P>.numberAdd{
+ 
+ .right_detail .number,
+ .right_detail .numberMinus,
+ .right_detail .numberAdd {
      display:inline-block;
      width:36px;
      text-align:center;

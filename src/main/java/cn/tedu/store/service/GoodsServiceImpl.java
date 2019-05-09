@@ -83,5 +83,28 @@ public class GoodsServiceImpl implements IGoodsService {
 	public List<Goods> getGoodsListByCategoryId(Integer categoryId) {
 		return getGoodsListByCategoryId(categoryId, ORDER_BY_DEFAULT, 1);
 	}
+	
+	/**
+	 * 根據商品種類獲取商品訊息
+	 */
+	public List<Goods> getGoodsListByItemType(String itemType) {
+		return goodsMapper.getGoodsListByItemType(itemType);
+	}
+
+	/**
+	 * 獲取商品總數量
+	 */
+	public Integer getGoodsCountByCategoryId(Integer categoryId) {
+		return goodsMapper.getGoodsCountByCategoryId(categoryId);
+	}
+
+	/**
+	 * 根據商品ID獲取商品訊息
+	 */
+	public Goods getGoodsById(Integer id) {
+		return goodsMapper.getGoodsById(id);
+	}
+
+	
 
 }

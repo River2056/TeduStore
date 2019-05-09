@@ -1,0 +1,63 @@
+@CHARSET "utf-8";
+
+.addrList .addr {
+	width: 998px;
+	height: 40px;
+	line-height: 40px;
+	border-radius: 5px;
+	border: 1px solid #aaa;
+	margin-bottom: 5px;
+}
+
+.addrList .addr .left {
+	float: left;
+	width: 120px;
+	background: #aaa;
+	color: #fff;
+	text-align: center;
+	line-height: 40px;
+}
+
+.addrList .addr .center {
+	float: left;
+	margin-left: 10px;
+}
+
+.addrList .addr .right {
+	float: right;
+	margin-right: 10px;
+	font-size: 12px;
+}
+
+/* 為激活狀態添加樣式 */
+.addrList .active {
+	border: 1px solid #0aa1ed;
+}
+
+.addrList .active .left {
+	background-color: #0aa1ed;
+}
+
+#more {
+	font-size: 14px;
+}
+
+.show {
+	display: block;
+}
+
+.hide {
+	display: none;
+}
+
+.base_select{
+    border: 1px solid #0AA1ED !important;
+    display: block;
+}
+.base_select .address_name{
+	background-color: #0AA1ED !important;
+}
+
+.base {
+	display: none;
+}

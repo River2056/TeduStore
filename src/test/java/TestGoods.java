@@ -46,4 +46,17 @@ public class TestGoods {
 		
 		ctx.close();
 	}
+	
+	@Test
+	public void testGetCount() {
+		AbstractApplicationContext ctx = new ClassPathXmlApplicationContext("spring-dao.xml");
+		GoodsMapper mapper = ctx.getBean("goodsMapper", GoodsMapper.class);
+		
+		Integer categoryId = 163;
+		Integer count = mapper.getGoodsCountByCategoryId(categoryId);
+		
+		System.out.println("count: " + count);
+		
+		ctx.close();
+	}
 }

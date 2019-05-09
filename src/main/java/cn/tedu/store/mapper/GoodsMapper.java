@@ -21,4 +21,26 @@ public interface GoodsMapper {
 			@Param("orderBy") String orderBy, 
 			@Param("offset") Integer offset, 
 			@Param("count") Integer count);
+	
+	/**
+	 * 根據種類獲取商品訊息
+	 * @param itemType 商品種類
+	 * @return 返回商品的List集合
+	 */
+	List<Goods> getGoodsListByItemType(String itemType);
+	
+	
+	/**
+	 * 獲取某分類的商品數量總數
+	 * @param categoryId 分類ID
+	 * @return 返回商品數量
+	 */
+	Integer getGoodsCountByCategoryId(Integer categoryId);
+	
+	/**
+	 * 根據商品ID獲取商品訊息
+	 * @param id 商品ID
+	 * @return 返回匹配的商品數據, 如果沒有匹配數據, 則返回null
+	 */
+	Goods getGoodsById(Integer id);
 }

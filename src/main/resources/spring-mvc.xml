@@ -37,6 +37,8 @@
 				<!-- 攔截範圍 -->
 				<mvc:mapping path="/user/*"/>
 				<mvc:mapping path="/address/*"/>
+				<mvc:mapping path="/cart/*"/>
+				<mvc:mapping path="/order/*"/>
 				
 				<!-- 例外, 即無視攔截器 -->
 				<mvc:exclude-mapping path="/user/register.do"/>
@@ -46,6 +48,9 @@
 				<mvc:exclude-mapping path="/user/check_username.do.do"/>
 				<mvc:exclude-mapping path="/user/check_phone.do"/>
 				<mvc:exclude-mapping path="/user/check_email.do"/>
+				<mvc:exclude-mapping path="/user/demo.do"/>
+				<mvc:exclude-mapping path="/user/code.do"/>
+				<mvc:exclude-mapping path="/user/check_code.do"/>
 				
 				<!-- 攔截器 -->
 				<bean class="cn.tedu.store.interceptor.LoginInterceptor"/>

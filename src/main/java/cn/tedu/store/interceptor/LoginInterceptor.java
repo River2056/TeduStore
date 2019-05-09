@@ -11,33 +11,33 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// ¤é»x
+		// æ—¥èªŒ
 		System.out.println("LoginInterceptor.preHandle() get session");
 		System.out.println("\t request: " + request);
 		System.out.println("\t response: " + response);
 		System.out.println("\t handler: " + handler);
 		
-		// Àò¨úHttpSession¹ï¶H
+		// ç²å–HttpSessionå°è±¡
 		HttpSession session = request.getSession();
 		
-		// §PÂ_¬O§_µn¤J
+		// åˆ¤æ–·æ˜¯å¦ç™»å…¥
 		if(session.getAttribute("uid") == null) {
-			// ¨S¦³µn¤J, «h­«©w¦V¨ì¥D­¶
+			// æ²’æœ‰ç™»å…¥, å‰‡é‡å®šå‘åˆ°ä¸»é 
 			String url = request.getContextPath() + "/main/index.do";
 			response.sendRedirect(url);
-			// ÄdºI, ¤£Ä~Äò©¹«á³B²z½Ğ¨D¤F(¨Ò¦p¨Sµn¤Jª½±µ¶i­×§ï±K½X­¶­±)
+			// æ””æˆª, ä¸ç¹¼çºŒå¾€å¾Œè™•ç†è«‹æ±‚äº†(ä¾‹å¦‚æ²’ç™»å…¥ç›´æ¥é€²ä¿®æ”¹å¯†ç¢¼é é¢)
 			System.out.println();
 			return false;
 		}
 		
-		// ©ñ¦æ
+		// æ”¾è¡Œ
 		return true;
 	}
 
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
-		// ¤é»x
+		// æ—¥èªŒ
 				System.out.println("LoginInterceptor.postHandle()");
 				System.out.println("\t request: " + request);
 				System.out.println("\t response: " + response);
@@ -49,7 +49,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		
-		// ¤é»x
+		// æ—¥èªŒ
 				System.out.println("LoginInterceptor.afterCompletion()");
 				System.out.println("\t request: " + request);
 				System.out.println("\t response: " + response);

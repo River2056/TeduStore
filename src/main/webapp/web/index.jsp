@@ -103,7 +103,7 @@
          		<p>${categories161[0].name }</p>
          		<ul>
          			<c:forEach items="${ computerCategories[0] }" var="category">
-         				<li><a href="#${category.id }">${category.name }</a></li>
+         				<li><a href="../goods/list.do?category_id=${category.id }&order_by=0&page=1">${category.name }</a></li>
          			</c:forEach>
          		</ul>
          		
@@ -111,14 +111,14 @@
          		<p>${categories161[1].name }</p>
          		<ul>
          			<c:forEach items="${ computerCategories[1] }" var="category">
-         				<li><a href="#${category.id }">${category.name }</a></li>
+         				<li><a href="../goods/list.do?category_id=${category.id }&order_by=0&page=1">${category.name }</a></li>
          			</c:forEach>
          		</ul>
          		
          		<p>${categories161[2].name }</p>
          		<ul>
 	          		<c:forEach items="${ computerCategories[2] }" var="category">
-	          			<li><a href="#${category.id }">${category.name }</a></li>
+	          			<li><a href="../goods/list.do?category_id=${category.id }&order_by=0&page=1">${category.name }</a></li>
 	          		</c:forEach>
 	          	</ul>
             	

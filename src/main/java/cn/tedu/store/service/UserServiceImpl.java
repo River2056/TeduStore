@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import cn.tedu.store.bean.User;
@@ -18,6 +20,9 @@ public class UserServiceImpl implements IUserService {
 	
 	@Resource(name="userMapper")
 	private UserMapper userMapper;
+	
+	@Value("#{dbConfig.salt}")
+	private String salt;
 
 	public User findUserByUsername(String username) {
 		return userMapper.findUserByUsername(username);
@@ -30,6 +35,18 @@ public class UserServiceImpl implements IUserService {
 	public Integer register(User user) {
 		if(!checkUsernameExists(user.getUsername())) {
 			// means no such user, allow register, return new user ID
+			// encrypt user's password with md5
+			String password = user.getPassword();
+			// add salt, increse password security
+			String md5 = DigestUtils.md5Hex(password + salt);
+			
+			// set encrypted password to user
+			user.setPassword(md5);
+			
+			// output
+			System.out.println(salt);
+			System.out.println(user.getPassword());
+			
 			userMapper.insert(user);
 			return user.getId();
 			
@@ -45,7 +62,14 @@ public class UserServiceImpl implements IUserService {
 		User user = findUserByUsername(username);
 		if(user != null) {
 			// true -> user exists, check password
-			if(user.getPassword().equals(password)) {
+			// encrypt user's password with md5, check if both md5 matches
+			String userPassword = user.getPassword(); // md5 encrypted version
+			String inputPassword = DigestUtils.md5Hex(password + salt);
+			System.out.println("userPassword: " + userPassword);
+			System.out.println("inputPassword: " + inputPassword);
+			System.out.println(salt);
+			
+			if(userPassword.equals(inputPassword)) {
 				// username, password matched, proceed login;
 				return user;
 			} else {
@@ -74,12 +98,16 @@ public class UserServiceImpl implements IUserService {
 
 		} else {
 			// user exists -> check password
-			if(user.getPassword().equals(oldPassword)) {
+			// encrypt old password
+			String userOldPassword = DigestUtils.md5Hex(oldPassword + salt);
+			if(user.getPassword().equals(userOldPassword)) {
 				// oldPassword match, proceed to change newPassword
 				// create User entity
 				User newUser = new User();
 				newUser.setId(uid);
-				newUser.setPassword(newPassword);
+				// encrypt new password
+				String encryptNewPassword = DigestUtils.md5Hex(newPassword + salt);
+				newUser.setPassword(encryptNewPassword);
 				return userMapper.update(newUser);
 			} else {
 				// oldPassword failed, throw exception

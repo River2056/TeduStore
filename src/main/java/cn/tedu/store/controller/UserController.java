@@ -1,6 +1,16 @@
 package cn.tedu.store.controller;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Random;
+
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +27,7 @@ import cn.tedu.store.service.IUserService;
 import cn.tedu.store.service.ex.PasswordNotMatchException;
 import cn.tedu.store.service.ex.UserNotFoundException;
 import cn.tedu.store.service.ex.UsernameAlreadyExistsException;
+import cn.tedu.store.service.ex.UsernameNotFoundException;
 
 @Controller
 @RequestMapping("/user")
@@ -169,8 +180,16 @@ public class UserController extends BaseController {
 	public ResponseResult<Void> handleLogin(
 			@RequestParam("username") String username, 
 			@RequestParam("password") String password,
+			@RequestParam("code") String code,
 			HttpSession session) {
 		ResponseResult<Void> rr;
+		String sessionCode = (String) session.getAttribute("code");
+		
+		// check if user input CAPTCHA is equal to session's CAPTCHA
+		if(!sessionCode.equalsIgnoreCase(code)) {
+			rr = new ResponseResult<Void>(-2, "驗證碼不正確!");
+			return rr;
+		}
 		
 		try {
 			User user = userService.login(username, password);
@@ -178,7 +197,7 @@ public class UserController extends BaseController {
 			session.setAttribute("uid", user.getId());
 			session.setAttribute("username", user.getUsername());
 			
-		} catch (UserNotFoundException e) {
+		} catch (UsernameNotFoundException e) {
 			rr = new ResponseResult<Void>(0, e);
 			
 		} catch (PasswordNotMatchException e) {
@@ -278,6 +297,114 @@ public class UserController extends BaseController {
 		// 執行重定向
 		return "redirect:" + url;
 	}
+	
+	/**
+	 * UserController 中添加處理圖片下載方法
+	 * produces 用於設定content-t
+	 * @ResponseBody 與返回值byte[]配合, 填充
+	 * @return
+	 * @throws IOException 
+	 */
+	@RequestMapping(value="/demo.do", produces="image/png")
+	@ResponseBody
+	public byte[] pngDemo() throws IOException {
+		// 讀取一個png圖片, 返回圖片數據即可
+		String path = "cn/tedu/store/controller/matrix.png";
+		// 從包裏讀取文件
+		InputStream in = getClass().getClassLoader().getResourceAsStream(path);
+		// avaliable()方法可以檢查留一次可以讀取多少文字, 小文件就是文件長度
+		byte[] bytes = new byte[in.available()];
+		in.read(bytes);
+		System.out.println("content-length: " + bytes.length);
+		in.close();
+		return bytes;
+	}
+	
+	@RequestMapping("/check_code.do")
+	@ResponseBody
+	public ResponseResult<Void> checkCode(String code, HttpSession session) {
+		String c = (String)session.getAttribute("code");
+		
+		if(c == null) {
+			return new ResponseResult<Void>(0, "驗證碼錯誤!");
+		}
+		
+		// equalsIgnoreCase 忽略大小寫比較兩個字符串是否一致
+		if(c.equalsIgnoreCase(code)) {
+			return new ResponseResult<Void>(1, "驗證碼正確");
+		}
+		
+		return new ResponseResult<Void>(0, "驗證碼錯誤!");
+	}
+	
+	@RequestMapping(value="/code.do", produces="image/png")
+	@ResponseBody
+	public byte[] code(HttpSession session) throws IOException {
+		// 利用算法生成一個動態PNG圖片
+		String code = createCode(4);
+		session.setAttribute("code", code);
+		System.out.println(code);
+		byte[] bytes = createPng(code); // 生成圖片
+		return bytes;
+		
+	}
+
+	private byte[] createPng(String code) throws IOException {
+		// 創建一個圖片對象
+		BufferedImage img = new BufferedImage(100, 40, BufferedImage.TYPE_3BYTE_BGR);
+		Random r = new Random();
+		for(int i = 0 ; i < 5000 ; i++) {
+			int x = r.nextInt(img.getWidth());
+			int y = r.nextInt(img.getHeight());
+			int rgb = r.nextInt(0xffffff);
+			img.setRGB(x, y, rgb);
+		}
+		// 利用API繪製驗證碼字符串
+		Graphics2D g = img.createGraphics();
+		Color c = new Color(r.nextInt(0xffffff));
+		g.setColor(c);
+		Font font = new Font(Font.SANS_SERIF, Font.ITALIC, 35);
+		g.setFont(font);
+		g.drawString(code, 5, 36);
+		
+		// 利用API繪製混淆線
+		for(int i = 0 ; i < 10 ; i++) {
+			int x1 = r.nextInt(img.getWidth());
+			int y1 = r.nextInt(img.getHeight());
+			int x2 = r.nextInt(img.getWidth());
+			int y2 = r.nextInt(img.getHeight());
+			g.setColor(new Color(r.nextInt(0xffffff)));
+			g.drawLine(x1, y1, x2, y2);
+			
+		}
+		
+//		img.setRGB(0, 0, 0x0000ff);
+//		img.setRGB(50, 20, 0xffff00);
+		// 將圖片對象編碼為.png數據
+		// 創建數組輸出流, 作為緩存區(醬油瓶)
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		// 將png圖片數據(醬油)緩存到緩存區
+		ImageIO.write(img, "png", out);
+		out.close();
+		// 獲取緩存區中的數據(醬油)
+		byte[] bytes = out.toByteArray();
+		return bytes;
+	}
+
+	public String createCode(int n) {
+		String chs = "abcdefghijkmnpqxy"
+				+ "ABCDEFGHJKLMNPQRSTUV"
+				+ "34568";
+		char[] code = new char[n];
+		Random r = new Random();
+		for(int i = 0 ; i < code.length ; i++) {
+			int index = r.nextInt(chs.length());
+			code[i] = chs.charAt(index);
+		}
+		
+		return new String(code);
+	}
+	
 	
 	
 }

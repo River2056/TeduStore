@@ -35,6 +35,13 @@
                     <input type="password" id="password" placeholder="請輸入您的密碼" name="lwd" required minlength="6" maxlength="15">
                     <span><img src="../images/login/mm.png"></span>
                 </div>
+                
+                <div class="text">
+                    <input type="text" id="code" placeholder="驗證碼點擊刷新" name="code" required minlength="4" maxlength="4">
+                    <span><img id="code_png" name="code_png" src="code.do" style="top: -38px; right: -163px; cursor: pointer;"></span>
+                </div>
+                <div id="checkCodeResult" style="position: relative; top: -37px;right: 0px;"></div>
+                
                 <div class="chose">
                     <input type="checkbox" class="checkbox" id="ck_rmbUser"/>自動登入
                     <span>忘記密碼？</span>
@@ -73,7 +80,7 @@
 //         	'"username":' + $("#username").val() + ',' +
 //         	'"password":' + $("#password").val() +
 //         '}';
-		var userdata = "username=" + $("#username").val() + "&password=" + $("#password").val();
+		var userdata = "username=" + $("#username").val() + "&password=" + $("#password").val() + "&code=" + $("#code").val();
 		
         $.ajax({
         	"url": "handle_login.do",
@@ -127,6 +134,45 @@
             $.cookie("password", "", { expires: -1 });
         }
     };
+</script>
+<script type="text/javascript">
+// ===== 驗證碼相關 =====
+// 點擊刷新驗證碼
+$("#code_png").click(function() {
+	$(this).attr("src", "code.do?" + Math.random());
+});
+
+// 失去焦點, 檢驗驗證碼
+$("#code").blur(function(){
+    var data = $("#code").val();
+    if (data == null || data == "") {
+        $("#checkCodeResult").text("驗證碼不能為空！");
+        $("#checkCodeResult").css("color","red");
+        return false;
+    }
+    $.ajax({
+    	"url": "check_code.do",
+    	"data": {code: data},
+    	"type": "POST",
+    	"dataType": "json",
+    	"success": function(jsonObj) {
+    		if(jsonObj.state == 1) {
+    			$("#checkCodeResult").html(jsonObj.message);
+    			$("#checkCodeResult").css("color", "#0f0");
+    			
+    		} else {
+    			// 登入失敗, 用戶名或密碼錯誤
+    			$("#checkCodeResult").html(jsonObj.message);
+    			$("#checkCodeResult").css("color", "#f00");
+    		}
+    	}
+    });
+});
+
+$("#code").focus(function() {
+	$("#showResult").empty();
+});
+
 </script>
 </body>
 </html>

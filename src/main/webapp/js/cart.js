@@ -6,35 +6,51 @@ $(function() {
 		}
 	
 	adddel();
+	
+	// 計算總價
 	$('.imfor').each(function(){
 		var price=parseFloat($(this).children('.pices').children('.pices_information').children('span').html());
 		var amount=parseFloat($(this).children('.num').children('input').val());
 		var amountPrice=price*amount;
 		$(this).children('.totle').children('.totle_information').html(amountPrice.toFixed(2));
 	});
+	
 	//全选
 	$(".all").click(function() {
 		amountadd();
 		if($('.all>span').hasClass('normal')){
 			$('.all>span').addClass('true').removeClass('normal');
 			$('.all>span>img').attr('src','../images/cart/product_true.png');
+			
+			$('.all>span>input').attr('checked', 'checked');
+			
 			$(".Each>span").each(function() {
 				$(this).addClass('true').removeClass('normal');
 				$(this).children('img').attr('src','../images/cart/product_true.png');
+				
+				// checked all checkbox
+				$('.eachCheckBox').attr('checked', 'checked');
 			})
 
 			totl();
 		}else{
 			$('.all>span').addClass('normal').removeClass('true');
 			$('.all>span>img').attr('src','../images/cart/product_normal.png');
+			$('.all>span>input').removeAttr('checked');
+			
 			$('.Each>span').addClass('normal').removeClass('true');
 			$('.Each>span>img').attr('src','../images/cart/product_normal.png');
+			
+			// unchecked all checkbox
+			$('.eachCheckBox').removeAttr('checked');
+			
 			$(".susum").text(0.00);
 			$(".susumOne").text(0.00);
 			$('.total').text(0);
 			$('.totalOne').text(0);
 		}
 	})
+	
 	//单选
 	$('.Each>span').click(function(){
 		amountadd();
@@ -118,6 +134,7 @@ function totl() {
 		$('.totalOne').text(amount);
 	})
 }
+
 // 单独
 function amountadd(){
 	var amo=0;

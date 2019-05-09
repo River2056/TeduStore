@@ -1,5 +1,6 @@
 package cn.tedu.store.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.tedu.store.bean.Goods;
@@ -19,6 +20,8 @@ public interface IGoodsService {
 	 * 查詢商品按照價格遞減做排序
 	 */
 	String ORDER_BY_PRICE_DESC = "price DESC";
+	
+	String[] ORDER_BY = {ORDER_BY_DEFAULT, ORDER_BY_PRICE_ASC, ORDER_BY_PRICE_DESC};
 	
 	/**
 	 * 每頁顯示多少條數據, 默認常量為20條
@@ -87,4 +90,25 @@ public interface IGoodsService {
 	 * @return 返回商品的集合, 如果沒有, 則返回長度為0的List集合
 	 */
 	List<Goods> getGoodsListByCategoryId(Integer categoryId);
+	
+	/**
+	 * 獲取某分類的商品數量總數
+	 * @param categoryId 分類ID
+	 * @return 返回商品數量
+	 */
+	Integer getGoodsCountByCategoryId(Integer categoryId);
+	
+	/**
+	 * 根據種類獲取商品訊息
+	 * @param itemType 商品種類
+	 * @return 返回商品的List集合
+	 */
+	List<Goods> getGoodsListByItemType(String itemType);
+	
+	/**
+	 * 根據商品ID獲取商品訊息
+	 * @param id 商品ID
+	 * @return 返回匹配的商品數據, 如果沒有匹配數據, 則返回null
+	 */
+	Goods getGoodsById(Integer id);
 }
