@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>upload demo</title>
+		<style type="text/css">
+		#view img, #list img {
+			width: 150px;
+			padding: 5px;
+			margin: 8px;
+			background-color: #ccc;
+			border: 1px solid #ddd;
+		}
+		</style>
+	</head>
+	<body>
+		<h1>文件上載功能</h1>
+		<h2>表單文件上載</h2>
+		<p>表單提交3個關鍵點</p>
+		<ol>
+			<li>必須使用POST方法提交表單</li>
+			<li>必須設置 enctype="multipart/form-data"</li>
+			<li>使用 input type="file"元素選擇文件</li>
+		</ol>
+		
+		<form enctype="multipart/form-data" action="demo/upload.do" method="POST">
+			圖片: <input name="image" type="file"/><br/>
+			說明: <input name="memo" type="text"/><br/>
+			<input type="submit" value="上傳"/>
+		</form>
+		
+		
+		
+		<h2>AJAX 文件上載</h2>
+		<div>
+			圖片: <input id="img" type="file" multiple="multiple"/>
+		</div>
+		
+		<div id="view"></div> <!-- 顯示選擇圖片 -->
+		
+		<div>
+			說明: <input id="memo" type="text"/>
+		</div>
+		<input id="upload" type="button" value="上載"/>
+		
+		
+		<h2>jQuery文件上載</h2>
+		<div>
+			文件: <input id="files" type="file" multiple="multiple"/>
+		</div>
+		<div>
+			說明: <input id="comment" type="text"/>
+		</div>
+		<div id="list"></div> <!-- 顯示選擇的文件 -->
+		<input id="jquery-upload" type="button" value="jQuery上載"/>
+		
+		<script type="text/javascript">
+		
+		var img = document.getElementById('img');
+		// 綁定選擇事件
+		img.onchange = function() {
+			var files = this.files;
+			var view = document.getElementById('view');
+			view.innerHTML = "";
+			
+			// files => nodeList, not an array
+			// need to use Array tools to turn it into an array in order to use forEach()
+			Array.from(files).forEach(file => {
+				// creating an <img> tag
+				var im = new Image();
+				// getting urls of pictures
+				var url = window.URL.createObjectURL(file);
+				// set <img src="url">
+				im.src = url;
+				// add into view div
+				view.appendChild(im);
+			});
+			
+// 			for(var i = 0 ; i < files.length ; i++) {
+// 				var file = files[i];
+// 				var im = new Image();
+// 				var url = window.URL.createObjectURL(file);
+// 				im.src = url;
+// 				view.appendChild(im);
+// 			}
+			
+			
+		}
+		
+		var upload = document.getElementById('upload');
+		upload.onclick = function() {
+			// 找到上載文件
+			var files = img.files;
+			if(files.length == 0) {
+				// no files at all, return
+				return;
+			}
+			// 創建FormData對象
+			var frm = new FormData();
+			// 將文件添加到FormData對象中
+			for(var i = 0 ; i < files.length ; i++) {
+				var file = files[i];
+				frm.append('images', file);
+			}
+			// 將其他表單數據填充到FormData中
+			var memo = document.getElementById('memo').value;
+			frm.append('memo', memo);
+			
+			// 創建XHR對象, 將FormData發送到服務器
+			var xhr = new XMLHttpRequest();
+			// 綁定事件監聽, 只處理完成後返回成功的結果
+			xhr.onreadystatechange = function(json) {
+				// 請求發送完成 && 請求成功
+				if(xhr.readyState == 4 && xhr.status == 200) {
+					alert(json);
+				}
+			}
+			// 打開URL
+			var url = 'demo/upload-images.do';
+			xhr.open('POST', url);
+			
+			// 發送數據
+			xhr.send(frm);
+		}
+		
+		
+		</script>
+		
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript">
+		$('#files').change(function() {
+			var list = this.files;
+			$('#list').empty();
+			for(var i = 0 ; i < list.length ; i++) {
+				var file = list[i];
+				var url = window.URL.createObjectURL(file);
+				var img = $('<img>').attr('src', url);
+				$('#list').append(img);
+			}
+		});
+		
+		$('#jquery-upload').click(function() {
+			// 找到所有文件
+			var files = $('#files')[0].files;
+			// 創建FormData對象
+			var frm = new FormData();
+			for(var i = 0 ; i < files.length ; i++) {
+				var file = files[i];
+				frm.append('images', file);
+			}
+			frm.append('memo', $('#comment').val());
+			// 利用jQuery AJAX方法發送FormData對象
+			$.ajax({
+				url: 'demo/upload-images.do',
+				data: frm, // ajax方法發送FormData對象
+				type: 'POST',
+				dataType: 'json', 
+				processData: false, // 告訴jQuery不要處理frm數據
+				contentType: false, 
+				success: function(jsonObj) {
+					alert(jsonObj.message);
+				}
+			});
+		});
+		</script>
+		
+		
+	</body>
+</html>

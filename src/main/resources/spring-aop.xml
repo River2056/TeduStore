@@ -21,47 +21,10 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 		
 		<!-- 組件掃描 -->
-		<context:component-scan base-package="cn.tedu.store.controller"/>
+		<context:component-scan base-package="cn.tedu.store.aop"/>
 		
-		<!-- 配置ViewResolver -->
-		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-			<property name="prefix" value="/web/"/>
-			<property name="suffix" value=".jsp"/>
-		</bean>
-		
-		<!-- 配置註解驅動(for jackson) -->
-		<mvc:annotation-driven/>
-		
-		<mvc:interceptors>
-			<mvc:interceptor>
-				<!-- 攔截範圍 -->
-				<mvc:mapping path="/user/*"/>
-				<mvc:mapping path="/address/*"/>
-				<mvc:mapping path="/cart/*"/>
-				<mvc:mapping path="/order/*"/>
-				
-				<!-- 例外, 即無視攔截器 -->
-				<mvc:exclude-mapping path="/user/register.do"/>
-				<mvc:exclude-mapping path="/user/handle_register.do"/>
-				<mvc:exclude-mapping path="/user/login.do"/>
-				<mvc:exclude-mapping path="/user/handle_login.do"/>
-				<mvc:exclude-mapping path="/user/check_username.do.do"/>
-				<mvc:exclude-mapping path="/user/check_phone.do"/>
-				<mvc:exclude-mapping path="/user/check_email.do"/>
-				<mvc:exclude-mapping path="/user/code.do"/>
-				<mvc:exclude-mapping path="/user/check_code.do"/>
-				
-				<!-- 攔截器 -->
-				<bean class="cn.tedu.store.interceptor.LoginInterceptor"/>
-			</mvc:interceptor>
-		</mvc:interceptors>
-		
-		<!-- 配置Spring MVC 上載組件處理器 -->
-		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
-			<!-- 该属性用来配置可上传文件的最大 byte 数 -->  
-			<property name="maxUploadSize" value="10000000"/> <!-- size measured in bytes -->
-			<property name="defaultEncoding" value="UTF-8"/> <!-- 設置中文文件名的編碼 -->
-		</bean>  
+		<!-- 啟動AspectJ 的註解 -->
+		<aop:aspectj-autoproxy />
 		
 </beans>
 

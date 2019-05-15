@@ -4,16 +4,28 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -298,28 +310,6 @@ public class UserController extends BaseController {
 		return "redirect:" + url;
 	}
 	
-	/**
-	 * UserController 中添加處理圖片下載方法
-	 * produces 用於設定content-t
-	 * @ResponseBody 與返回值byte[]配合, 填充
-	 * @return
-	 * @throws IOException 
-	 */
-	@RequestMapping(value="/demo.do", produces="image/png")
-	@ResponseBody
-	public byte[] pngDemo() throws IOException {
-		// 讀取一個png圖片, 返回圖片數據即可
-		String path = "cn/tedu/store/controller/matrix.png";
-		// 從包裏讀取文件
-		InputStream in = getClass().getClassLoader().getResourceAsStream(path);
-		// avaliable()方法可以檢查留一次可以讀取多少文字, 小文件就是文件長度
-		byte[] bytes = new byte[in.available()];
-		in.read(bytes);
-		System.out.println("content-length: " + bytes.length);
-		in.close();
-		return bytes;
-	}
-	
 	@RequestMapping("/check_code.do")
 	@ResponseBody
 	public ResponseResult<Void> checkCode(String code, HttpSession session) {
@@ -404,6 +394,10 @@ public class UserController extends BaseController {
 		
 		return new String(code);
 	}
+	
+	
+
+	
 	
 	
 	

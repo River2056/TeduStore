@@ -48,7 +48,6 @@
 				<mvc:exclude-mapping path="/user/check_username.do.do"/>
 				<mvc:exclude-mapping path="/user/check_phone.do"/>
 				<mvc:exclude-mapping path="/user/check_email.do"/>
-				<mvc:exclude-mapping path="/user/demo.do"/>
 				<mvc:exclude-mapping path="/user/code.do"/>
 				<mvc:exclude-mapping path="/user/check_code.do"/>
 				
@@ -56,6 +55,13 @@
 				<bean class="cn.tedu.store.interceptor.LoginInterceptor"/>
 			</mvc:interceptor>
 		</mvc:interceptors>
+		
+		<!-- 配置Spring MVC 上載組件處理器 -->
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+			<!-- 该属性用来配置可上传文件的最大 byte 数 -->  
+			<property name="maxUploadSize" value="10000000"/> <!-- size measured in bytes -->
+			<property name="defaultEncoding" value="UTF-8"/> <!-- 設置中文文件名的編碼 -->
+		</bean>  
 		
 </beans>
 
