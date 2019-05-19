@@ -79,18 +79,18 @@ $(function() {
 
 
 	//删除当前行
-	$('.del_d').click(function() {
-			var id=$(this).parent().siblings('.pudc').children('.pudc_information').attr('id');
-			console.log(id);
-			$('.modal').fadeIn();
-			$('.no').click(function(){
-				$('.modal').fadeOut();
-			});
-			$('.yes').click(function(){
-				var url ='/delCartItem.html?itemId='+id;
-				 window.location.href=url;
-				})
-	});
+//	$('.del_d').click(function() {
+//			var id=$(this).parent().siblings('.pudc').children('.pudc_information').attr('id');
+//			console.log(id);
+//			$('.modal').fadeIn();
+//			$('.no').click(function(){
+//				$('.modal').fadeOut();
+//			});
+//			$('.yes').click(function(){
+//				var url ='/delCartItem.html?itemId='+id;
+//				 window.location.href=url;
+//				})
+//	});
 
 	//批量删除
 	$(".foot_del").click(function() {

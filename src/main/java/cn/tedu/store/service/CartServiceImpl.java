@@ -38,6 +38,15 @@ public class CartServiceImpl implements ICartService {
 		
 	}
 	
+	public Integer remove(Integer uid, Integer id) {
+		Integer affectedRows = cartMapper.delete(uid, id);
+		if(affectedRows != 1) {
+			throw new DataNotFoundException("查無此商品數據, 可能已提前遭刪除");
+		}
+		
+		return affectedRows;
+	}
+	
 	public List<Cart> getCartList(Integer uid) {
 		return cartMapper.getCartList(uid);
 	}

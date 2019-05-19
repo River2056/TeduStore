@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.tedu.store.bean.Cart;
 import cn.tedu.store.bean.ResponseResult;
 import cn.tedu.store.service.ICartService;
+import cn.tedu.store.service.ex.DataNotFoundException;
 import cn.tedu.store.service.ex.ServiceException;
 
 @Controller
@@ -56,6 +57,22 @@ public class CartController extends BaseController {
 			
 		}
 		
+		return rr;
+	}
+	
+	@RequestMapping("/delete.do")
+	@ResponseBody
+	public ResponseResult<Void> handleDeleteCartItem(Integer id, HttpSession session) {
+		ResponseResult<Void> rr;
+		Integer uid = getUidFromSession(session);
+		try {
+			cartService.remove(uid, id);
+			rr = new ResponseResult<Void>(1, "刪除成功!");
+			
+		} catch (DataNotFoundException e) {
+			rr = new ResponseResult<Void>(0, e);
+			
+		}
 		return rr;
 	}
 	

@@ -16,6 +16,14 @@ public interface ICartService {
 	Integer add(Cart cart);
 	
 	/**
+	 * 刪除購物車商品
+	 * @param uid 用戶ID
+	 * @param id 商品ID
+	 * @return 返回受影響的行數
+	 */
+	Integer remove(Integer uid, Integer id);
+	
+	/**
 	 * 獲取用戶的購物車中的商品列表
 	 * @param uid 用戶ID
 	 * @return 返回用戶購物車中的商品列表List, 沒有則返回長度為0的List

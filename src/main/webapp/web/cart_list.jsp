@@ -108,7 +108,7 @@
 	                        </div>
 	                         <a href="javascript:;" class="del_yr">移入收藏夹</a>
 	                        -->
-	                        <a href="javascript:void(${userCartList.id });" class="del_d">删除</a>
+	                        <a onclick="deleteCartItem(${userCartList.id })" class="del_d">删除</a>
 	                    </div>
                 	</div>
                 </c:forEach>
@@ -167,6 +167,29 @@
     $("#go-buy").click(function(){
         window.location.href="orderConfirm.html";
     })
+</script>
+
+<script type="text/javascript">
+function deleteCartItem(id) {
+	var checkIfDelete = confirm("您確定刪除寶貝嗎?");
+	var url = "delete.do";
+	var data = "id=" + id;
+	if(checkIfDelete) {
+		$.ajax({
+			url: url,
+			data: data,
+			type: "GET",
+			dataType: "json",
+			success: function(jsonObj) {
+				if(jsonObj.state == 1) {
+					alert(jsonObj.message);
+					location.href = "list.do";
+				}
+			}
+		});
+	}
+	
+}
 </script>
 </body>
 </html>

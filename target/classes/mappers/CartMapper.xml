@@ -33,6 +33,17 @@
 		)
 	</insert>
 	
+	<!-- 刪除購物車商品 -->
+	<!-- Integer delete(
+			@Param("uid") Integer uid, 
+			@Param("id") Integer id); -->
+	<delete id="delete">
+		DELETE FROM 
+			t_cart 
+		WHERE 
+			uid = #{uid} AND id = #{id};
+	</delete>
+	
 	<!-- 獲取用戶的購物車列表 -->
 	<!-- List<Cart> getCartList(Integer uid); -->
 	<select id="getCartList" resultType="cn.tedu.store.bean.Cart">
