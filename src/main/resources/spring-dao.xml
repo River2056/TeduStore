@@ -31,7 +31,7 @@
 			<property name="url" value="#{dbConfig.url}"/>
 			<property name="driverClassName" value="#{dbConfig.driver}"/>
 			<property name="username" value="#{dbConfig.user}"/>
-			<property name="password" value="#{dbConfig.password}"/>
+<!-- 			<property name="password" value="#{dbConfig.password}"/> -->
 			<property name="initialSize" value="#{dbConfig.initSize}"/>
 			<property name="maxActive" value="#{dbConfig.maxActive}"/>
 		</bean>
